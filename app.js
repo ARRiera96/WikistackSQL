@@ -4,6 +4,7 @@ var app = express();
 var bodyParser = require('body-parser');
 var swig= require('swig'); 
 var models = require('./models');
+var wikiRouter = require('./routes/wiki');
 
 
 //var routes= require('./routes/index.js');
@@ -13,10 +14,13 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 
-app.use('/',function(request, response){
+app.use('/',function(request, response, next){
 	console.log(request.path+' '+request.method);
-	response.send("hello");
+
+	//response.send("hello");
+	next(); 
 });
+app.use('/wiki', wikiRouter);
 
 //****************2)Make sure we file help ticket for this: 
 app.use(express.static('public'));
