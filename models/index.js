@@ -43,6 +43,17 @@ var Page= db.define('Page', {
     }
 }); 
 
+ //In this hook the row that we are creating, is passed in as the first parameter; keep this in mind.
+  Page.hook('beforeValidate', function(page,options){
+    if(page.title){
+      page.urlTitle= page.title.replace(/[^a-zA-Z\d:]/g, "_");
+    }
+    else{
+      page.urlTitle= Math.random().toString(36).substring(2, 7);
+    }
+
+  });
+
 
 //user table/model
 // name: full name of the user
@@ -57,8 +68,17 @@ var User= db.define('User', {
         type: Sequelize.STRING,
         allowNull: false,
         isEmail: true
-    }
+    },
+    id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    autoIncrement: true // Automatically gets converted to SERIAL for postgres
+  }
 }); 
+
+//how can we connect this to regular SQL tables conceptually? 
+Page.belongsTo(User, { as: "author" });
+
 
 module.exports = {
   Page: Page,

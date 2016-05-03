@@ -20,39 +20,30 @@ router.get('/', function(req, res){
 router.post('/', function(req,res){
 	//it converts its parameter to json and then sends that json object as response 
 	//var urlTitle= req.body.title; 
+  console.log('body', req.body);
 	var title= req.body.title; 
 	var content= req.body.content; 
-  var status= req.body.status; 
+  	var status= req.body.status; 
  // res.send('got to POST /wiki/');
 // STUDENT ASSIGNMENT:
   // add definitions for `title` and `content`
-  var page = Page.build({
-    title: title,
-    content: content,
-    status: status
-
+    var user = User.build({
+    	name: req.body.author,
+    	email: req.body.email
+  	});
+  	user.save()
+  	.then(function(user){
+    	var page = Page.build({
+    	title: title,
+   	 	content: content,
+    	status: status,
+    	 authorId: user.id
+  	})
+    .save()
+    .then(function(page){
+    	res.redirect(page.route); 
+  });;
   });
-
-
-  //In this hook the row that we are creating, is passed in as the first parameter; keep this in mind.
-  Page.hook('beforeValidate', function(page,options){
-    if(page.title){
-      page.urlTitle= page.title.replace(/[^a-zA-Z\d:]/g, "_");
-    }
-    else{
-      page.urlTitle= Math.random().toString(36).substring(2, 7);
-    }
-
-  });
-
-
-  page.save().then(function(page){
-  	console.log("Ive saved and now im here");
-  	//res.redirect('/wiki'); 
-  	res.redirect(page.route); 
-  });
-
-
 });
 
 

@@ -22,13 +22,17 @@ console.log();
 app.use('/wiki', wikiRouter);
 
 //****************2)Make sure we file help ticket for this: 
-app.use(express.static('public'));
+app.use(express.static(__dirname +'public'));
 // app.use('public/stylesheets/');
 
 //****************3)Make sure to clear this up: 
+//when you go to res.render, find the file here: 
 app.set('views', __dirname + '/views');
+//when you go to res.redner, the extension will be, 
 app.set('view engine', 'html'); 
+//when you go to res.render html, utilize swig.renderFile to do so
 app.engine('html', swig.renderFile);
+//try not to clash with express caching 
 swig.setDefaults({ cache: false });
 
 // app.listen(3000, function(){
@@ -36,9 +40,10 @@ swig.setDefaults({ cache: false });
 // });
 
 //****************4)this is returning a promise right ??
-models.User.sync({})
+models.User.sync()
 .then(function () {
-    return models.Page.sync({})
+	//*********5) What exactly does force:true do? 
+    return models.Page.sync()
 })
 .then(function () {
     app.listen(3001, function () {
@@ -62,6 +67,10 @@ models.User.sync({})
 
 
 //****************3)Make sure to clear this up: 
+
+
+//**************how can we connect this to regular SQL tables conceptually? 
+// Page.belongsTo(User, { as: "author" }); -----this creates an authorId column how come? 	
 
 
 
