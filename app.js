@@ -22,7 +22,7 @@ console.log();
 app.use('/wiki', wikiRouter);
 
 //****************2)Make sure we file help ticket for this: 
-app.use(express.static(__dirname +'public'));
+app.use(express.static(__dirname +'/public'));
 // app.use('public/stylesheets/');
 
 //****************3)Make sure to clear this up: 
@@ -63,7 +63,7 @@ models.User.sync()
 
 //****************2)Make sure we file help ticket for this: 
 //Instead of having to make a router and method that handles a request for a file, we can use app.use(express.static(public)) that will server files for us from the public folder according to which css file 
-//the link element is sending get request for (the value of href in that link element)
+//the link element is sending a get request for (the value of href in that link element)
 
 
 //****************3)Make sure to clear this up: 
