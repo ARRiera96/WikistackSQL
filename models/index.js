@@ -18,8 +18,8 @@ var Page= db.define('Page', {
         allowNull: false
     },
     urlTitle: {
-        type: Sequelize.STRING,
-        allowNull: false,
+        type: Sequelize.STRING
+        // allowNull: false,
 
     },
     content: {

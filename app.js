@@ -15,8 +15,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 
 app.use('/',function(request, response, next){
-	console.log(request.path+' '+request.method);
-
+console.log();
 	//response.send("hello");
 	next(); 
 });
@@ -24,6 +23,7 @@ app.use('/wiki', wikiRouter);
 
 //****************2)Make sure we file help ticket for this: 
 app.use(express.static('public'));
+// app.use('public/stylesheets/');
 
 //****************3)Make sure to clear this up: 
 app.set('views', __dirname + '/views');
@@ -46,3 +46,22 @@ models.User.sync({})
     });
 })
 .catch(console.error);
+
+//Answers to the above questions: 
+
+//  ****************1) What exactly do these two methods do: 
+//when we submit a form we get url parameters from the contents of that form, in order to make use of the parameters in the url we need
+// body-parser.urlencoded to turn it into an accesible js object : app.use(bodyParser.urlencoded({ extended: false }));
+
+//If form some reason, a request made from a client comes in json form then we need to app.use(bodyParser.json()), in order to have access to it 
+//in req.body. 
+
+//****************2)Make sure we file help ticket for this: 
+//Instead of having to make a router and method that handles a request for a file, we can use app.use(express.static(public)) that will server files for us from the public folder according to which css file 
+//the link element is sending get request for (the value of href in that link element)
+
+
+//****************3)Make sure to clear this up: 
+
+
+
